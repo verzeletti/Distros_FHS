@@ -2,7 +2,7 @@
 # Scripts login in the order of load:
 # 1- /etc/update-motd.d/10-uname
 # 2- /etc/motd
-# 3- lastlogin (ainda não encontrado)
+# 3- PrintLastLog yes (option in /etc/ssh/sshd_config)
 # 4- /etc/profile.d/20-info_servidor.sh
 
 echo -e "Realtime..: \e[01;37m$(date +"%A, %e %B %Y, %r")
