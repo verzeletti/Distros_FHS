@@ -1,0 +1,15 @@
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system>                <mount point>   <type>      <options>            <dump>  <pass>
+/dev/mapper/vg--base-lv--root   /               xfs         defaults                0       0
+/dev/mapper/vg--base-lv--boot   /boot           xfs         defaults                0       0
+/dev/mapper/vg--base-lv--tmp    /tmp            xfs         defaults,nosuid,nodev   0       0
+/dev/mapper/vg--base-lv--usr    /usr            xfs         defaults                0       0
+/dev/mapper/vg--base-lv--var    /var            xfs         defaults,nosuid,nodev   0       0
+/dev/mapper/vg--base-lv--varlog /var/log        xfs         defaults,nosuid,nodev   0       0
+/dev/mapper/vg--base-lb--swap   none            swap        sw                      0       0
+/dev/sr0                        /media/cdrom0   udf,iso9660 user,noauto             0       0
