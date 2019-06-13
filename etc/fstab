@@ -11,5 +11,5 @@
 /dev/mapper/vg--base-lv--usr    /usr            xfs         defaults                0       0
 /dev/mapper/vg--base-lv--var    /var            xfs         defaults,nosuid,nodev   0       0
 /dev/mapper/vg--base-lv--varlog /var/log        xfs         defaults,nosuid,nodev   0       0
-/dev/mapper/vg--base-lb--swap   none            swap        sw                      0       0
+/dev/mapper/vg--base-lv--swap   none            swap        sw                      0       0
 /dev/sr0                        /media/cdrom0   udf,iso9660 user,noauto             0       0
