@@ -22,7 +22,10 @@ fi
 
 # alterar hostname local
 chost="$( hostname -s )"
+iphost_old="$( ip r s | tail -n1 | awk '{print $1}' )"
+iphost="$( head -n2 /etc/hosts | tail -n1 | awk '{print $NF}' )"
 sed -i "s/${chost}/${1}/g" /etc/hosts
+sed -i "s/${iphost}/${iphost_old}/g" /etc/hosts
 sed -i "s/${chost}/${1}/g" /etc/hostname
 
 invoke-rc.d hostname.sh restart
