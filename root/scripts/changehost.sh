@@ -27,6 +27,7 @@ iphost="$( head -n2 /etc/hosts | tail -n1 | awk '{print $NF}' )"
 sed -i "s/${chost}/${1}/g" /etc/hosts
 sed -i "s/${iphost}/${iphost_old}/g" /etc/hosts
 sed -i "s/${chost}/${1}/g" /etc/hostname
+export HOSTNAME=${1}
 
 invoke-rc.d hostname.sh restart
 invoke-rc.d networking force-reload
@@ -36,3 +37,8 @@ hostnamectl set-hostname $1
 # re-gerar chaves SSH
 rm -f /etc/ssh/ssh_host_* 2> /dev/null
 dpkg-reconfigure openssh-server &> /dev/null
+
+
+# mensagem final
+echo -n "Apenas realize um novo login, para corrigir o hostname do prompt!"
+
