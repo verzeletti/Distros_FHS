@@ -99,6 +99,7 @@ alias cds='cd /etc/init.d; clear && ls'
 alias  cp='cp -i'
 alias  mv='mv -i'
 alias  rm='rm -i'
+alias   s='sudo su -'
 
 
 # Alias definitions.
