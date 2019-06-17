@@ -23,8 +23,8 @@ iface ens192 inet static
         dns-search lages.ifsc.edu.br
 
 iface ens192 inet6 static
-        pre-up modprobe ipv6
+        #pre-up modprobe ipv6
         address 2804:1454:4001:110::99
         netmask 64
         gateway 2804:1454:4001:110::1
-        dns-nameservers ::1
+        dns-nameservers 2804:1454:4001:110::10
