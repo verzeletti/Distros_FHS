@@ -13,18 +13,14 @@ iface lo inet loopback
 auto ens192
 allow-hotplug ens192
 iface ens192 inet static
-        address 10.150.0.99
-        netmask 255.255.255.0
-        network 10.150.0.0
-        broadcast 10.150.0.255
-        gateway 10.150.0.1
-        # dns-* options are implemented by the resolvconf package, if installed
-        dns-nameservers 10.150.0.10
-        dns-search lages.ifsc.edu.br
+    address 10.150.0.99/24
+    gateway 10.150.0.1
+    # dns-* options are implemented by the resolvconf package, if installed
+    dns-nameservers 10.150.0.10
+    dns-search lages.ifsc.edu.br
 
 iface ens192 inet6 static
-        #pre-up modprobe ipv6
-        address 2804:1454:4001:110::99
-        netmask 64
-        gateway 2804:1454:4001:110::1
-        dns-nameservers 2804:1454:4001:110::10
+    #pre-up modprobe ipv6
+    address 2804:1454:4001:110::99/64
+    gateway 2804:1454:4001:110::1
+    dns-nameservers 2804:1454:4001:110::10
