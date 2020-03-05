@@ -1,0 +1,15 @@
+
+# File: sources.list
+# deb cdrom:[Debian GNU/Linux 9.9.0 _Stretch_ - Official amd64 NETINST 20190427-10:30]/ stretch main
+# Repositório Interno: http://repositorio.lages.ifsc.edu.br
+# Repositório Externo recomendado: http://debian.pop-sc.rnp.br
+
+deb http://repositorio.lages.ifsc.edu.br/debian/ stretch main  contrib non-free
+deb-src http://repositorio.lages.ifsc.edu.br/debian/ stretch main contrib non-free
+
+deb http://security.debian.org/debian-security stretch/updates main
+deb-src http://security.debian.org/debian-security stretch/updates main
+
+# stretch-updates, previously known as 'volatile'
+deb http://repositorio.lages.ifsc.edu.br/debian/ stretch-updates main contrib non-free
+deb-src http://repositorio.lages.ifsc.edu.br/debian/ stretch-updates main contrib non-free
