@@ -114,6 +114,7 @@ alias    cp='cp -iv'
 alias    mv='mv -iv'
 alias    rm='rm -iv --one-file-system'
 alias mkdir='mkdir --parents'
+alias     s='sudo su -'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
