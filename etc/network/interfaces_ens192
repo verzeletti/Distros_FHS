@@ -1,0 +1,26 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# This is only a example of IPv4 and IPv6 configuration!
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto ens192
+allow-hotplug ens192
+iface ens192 inet static
+    address 10.150.0.99/24
+    gateway 10.150.0.1
+    # dns-* options are implemented by the resolvconf package, if installed
+    dns-nameservers 10.150.0.10
+    dns-search lages.ifsc.edu.br
+
+iface ens192 inet6 static
+    #pre-up modprobe ipv6
+    address 2804:1454:4001:110::99/64
+    gateway 2804:1454:4001:110::1
+    dns-nameservers 2804:1454:4001:110::10
