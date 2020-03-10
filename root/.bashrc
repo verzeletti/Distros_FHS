@@ -65,6 +65,8 @@ if [ "$color_prompt" = yes ]; then
       PS1='${debian_chroot:+($debian_chroot)}\[\033[01;37m\]\u\[\033[00;32m\]@\[\033[00;32m\]\h\[\033[00m\]:\[\033[00;32m\]\w\[\033[00m\]\$ '
     #ACAD: 
       #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;37m\]\u\[\033[00;31m\]@\[\033[00;31m\]\h\[\033[00m\]:\[\033[00;31m\]\w\[\033[00m\]\$ '
+    #Test Environment:
+      #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;37m\]\u\[\033[01;37m\]@\[\033[01;37m\]\h\[\033[00m\]:\[\033[01;37m\]\w\[\033[00m\]\$ '
 
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
