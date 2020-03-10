@@ -117,6 +117,11 @@ alias    mv='mv -iv'
 alias    rm='rm -iv --one-file-system'
 alias mkdir='mkdir --parents'
 alias     s='sudo su -'
+alias   fid='echo "Arquivos: $(ls -la |grep "^-"|wc -l)  Diretórios: $(ls -la|grep "^d"|wc -l)"'
+alias  more=less
+alias  free='free -m'
+alias     s='sudo su'
+
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
