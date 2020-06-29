@@ -38,7 +38,7 @@ hostnamectl set-hostname $1
 
 # re-gerar chaves SSH
 rm -f /etc/ssh/ssh_host_* 2> /dev/null
-dpkg-reconfigure openssh-server &> /dev/null
+dpkg-reconfigure openssh-server --force &> /dev/null
 
 
 # mensagem final
