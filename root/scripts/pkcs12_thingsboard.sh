@@ -1,6 +1,6 @@
 #!/bin/bash
-# written in 11/02/2021
-# by verzeletti at gmail dot com
+# written in   11 / fev / 2021
+#         by   verzeletti at gmail dot com
 
 ####
 # File Config Sample: /usr/share/thingsboard/conf/thingsboard.yml
