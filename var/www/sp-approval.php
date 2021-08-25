@@ -1,57 +1,91 @@
 <?php
-// Exemplo retirado de - https://simplesamlphp.org/docs/stable/simplesamlphp-sp
-// Outro exemplo em - https://sp.ufrgs.br/tutoriais/simplesaml.html
+// Designed to test Service Provider Authentication
 //
-// Escrito em 15/03/2021 - verzeletti at gmail dot com
-// Validacao de Service Provider (SP) com uso de FrameWork simpleSAMLphp
+// Glaidson Verzeletti
+// <verzeletti (at) gmail (dot) com>
+//
+// Last Changes: 2021-08-19
+//
+// Reference: https://simplesamlphp.org/docs/stable/simplesamlphp-sp
+// Another sample: https://sp.ufrgs.br/tutoriais/simplesaml.html
 
 
+// Just OID references
 //define("uid",         'urn:oid:0.9.2342.19200300.100.1.1');
 //define("cn",          'urn:oid:2.5.4.3');
 //define("displayName", 'urn:oid:2.16.840.1.113730.3.1.241');
 //define("mail",        'urn:oid:0.9.2342.19200300.100.1.3');
 
-// carrega o arquivo que registra as classes do SimpleSAMLphp com o autoloader
+// Just some html tags :)
+echo '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+echo '<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>';
+echo '<title>Service Provider - Test Script</title><body>';
+echo '<dd><h2>Aplicação PHP integrada ao SimpleSAML - Teste do SP (Service Provider)</h2>';
+echo '<br><h3><b>Atributos entregues pelo IdP:</b></h3>';
+
+// Loading a file which registers the SimpleSAMLphp classes with the autoloader
 require_once('../simplesamlphp/lib/_autoload.php');
 
-//define o servico que sera autenticado
-$as = new SimpleSAML_Auth_Simple('sistemaslages-sp');
 
-//obriga que a pagina abaixo somente seja executada por um usuário autenticado
+// Select authentication source
+$SP="disciplinas-sp";
+$_POST['serviceprovider'] = $SP;
+$as = new \SimpleSAML\Auth\Simple($SP);
+
+
+// Require authentication
 $as->requireAuth();
-?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<h2>Exemplo de Aplicação PHP + SimpleSAML</h2>
-
-<?php
-//real utilizaçao dos valores obtidos na autenticação:
-//Cria um array de atributos
+// Get attributes from IdP:
 $attributes = $as->getAttributes();
 
-// imprime todos atributos recebidos
+
+// Print all attributes
 //print_r($attributes);
 
-//imprime os atributos especificos
-//echo "<br>";
-//echo "Login --> {$attributes['uid']}";
-print(htmlspecialchars( "Nome (displayName attribute): " . $attributes['displayName'][0]) . "<br>");
-print(htmlspecialchars( "Login (uid attribute): " . $attributes['uid'][0]) . "<br>");
-//print(htmlspecialchars( "cn: " . $attributes['cn'][0]) . "<br>");
-print(htmlspecialchars( "Email (mail attribute) : " . $attributes['mail'][0]) . "<br>");
-print(htmlspecialchars( "Carreira (title attribute) : " . $attributes['title'][0]) . "<br>");
+// Print all attributes friendly
+//
+echo '<font size="4">';
+print(htmlspecialchars( "Nome (givenName)____________ " . $attributes['givenName'][0]) . "<br>");
+print(htmlspecialchars( "Sobrenome (sn)_______________ " . $attributes['sn'][0]) . "<br>");
+print(htmlspecialchars( "Nome Completo (displayName)__ " . $attributes['displayName'][0]) . "<br>");
+print(htmlspecialchars( "Login (uid)___________________ " . $attributes['uid'][0]) . "<br>");
+print(htmlspecialchars( "Email (mail)__________________ " . $attributes['mail'][0]) . "<br>");
+print(htmlspecialchars( "Carreira (title)_________________ " . $attributes['title'][0]) . "<br>");
+
+
+// Request authentication with a specific IdP
+// Not necessary in this context
+//$as->login([
+//   'saml:idp' => 'https://idp.lages.ifsc.edu.br/',
+//]);
+
+
+// Make any calls to SimpleSAMLphp. For more informations about it, see reference link above
+
+// use custom save handler
+//session_set_save_handler($handler);
+//session_start();
+
+// close session and restore default handler
+//session_write_close();
+//session_set_save_handler(new SessionHandler(), true);
+
+// use SimpleSAML\Session
+//$session = \SimpleSAML\Session::getSessionFromRequest();
+//$session->cleanup();
+//session_write_close();
+
+// back to custom save handler
+//session_set_save_handler($handler);
+//session_start();
+
+// More some html tags :)
 ?>
-
 <br><br>
-<a href="sp-approval_pg01.php">Aplicacao protegida</a>
-
+<h3>O que deseja fazer?</h3>
+Testar acesso à uma "<a href="sp-approval_pg01.php?serviceprovider=<?php echo "$SP";?>">Aplicação Protegida</a>"
 <br><br>
-<a href="/simplesaml/module.php/core/authenticate.php?as=sistemaslages-sp&logout">(Encerrar Sessao)</a>
-
-<br>
-</body>
-</html>
+>> <a href="/simplesaml/module.php/core/authenticate.php?as=<?php echo "$SP"; ?>&logout">Encerrar Sessão</a> <<
+</font></dd><br></body></html>
