@@ -62,25 +62,6 @@ print(htmlspecialchars( "Carreira (title)_________________ " . $attributes['titl
 //]);
 
 
-// Make any calls to SimpleSAMLphp. For more informations about it, see reference link above
-
-// use custom save handler
-//session_set_save_handler($handler);
-//session_start();
-
-// close session and restore default handler
-//session_write_close();
-//session_set_save_handler(new SessionHandler(), true);
-
-// use SimpleSAML\Session
-//$session = \SimpleSAML\Session::getSessionFromRequest();
-//$session->cleanup();
-//session_write_close();
-
-// back to custom save handler
-//session_set_save_handler($handler);
-//session_start();
-
 // More some html tags :)
 ?>
 <br><br>
