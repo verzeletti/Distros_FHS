@@ -28,7 +28,7 @@ require_once('../simplesamlphp/lib/_autoload.php');
 
 
 // Select authentication source
-$SP="disciplinas-sp";
+$SP="MY_SIMPLESAML-sp";
 $_POST['serviceprovider'] = $SP;
 $as = new \SimpleSAML\Auth\Simple($SP);
 
