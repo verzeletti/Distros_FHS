@@ -18,7 +18,7 @@ set background=dark
 " differently from regular Vi. They are highly recommended though.
 set noautoindent        " Copy and Past Facility
 set paste               " Copy and Past Facility
-set mouse=nicr          " Disable mouse usage
+set mouse=nicr          " Disable mouse usage (You can use -C flag, ex: vim -C somefile)
 set ttymouse=           " Disable mouse usage in terminal
 
 " Source a global configuration file if available
