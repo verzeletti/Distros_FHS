@@ -120,7 +120,7 @@ alias     s='sudo su -'
 alias   fid='echo "Arquivos: $(ls -la |grep "^-"|wc -l)  Diretórios: $(ls -la|grep "^d"|wc -l)"'
 alias  more=less
 alias  free='free -m'
-alias     s='sudo su'
+alias     s='sudo su -'
 alias   fid='echo "Arquivos: $(ls -la |grep "^-"|wc -l)  Diretórios: $(ls -la|grep "^d"|wc -l)"'
 
 #
