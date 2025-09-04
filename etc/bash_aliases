@@ -1,0 +1,26 @@
+# some more ls aliases
+#alias ll='ls -l'
+#alias la='ls -A'
+#alias l='ls -CF'
+eval "$(dircolors)"
+alias    ls='ls --color=always --human-readable --group-directories-first'
+alias    ll='ls -l'
+alias    lla='la -l'
+alias    llt='ll --sort=time --time-style=iso'
+alias     la='l --almost-all'
+#alias     l='ls -C --classify'
+alias     l='ls -lah --classify'
+alias    ll='ls -lh'
+alias   cls='clear'
+alias   cds='cd /etc/init.d; clear && ls'
+alias    cp='cp -iv'
+alias    mv='mv -iv'
+alias    rm='rm -iv --one-file-system'
+alias mkdir='mkdir --parents'
+alias     s='sudo su -'
+alias   fid='echo "Arquivos: $(ls -la |grep "^-"|wc -l)  Diretórios: $(ls -la|grep "^d"|wc -l)"'
+alias  more=less
+alias  free='free -m'
+alias     s='sudo su -'
+alias   fid='echo "Arquivos: $(ls -la |grep "^-"|wc -l)  Diretórios: $(ls -la|grep "^d"|wc -l)"'
+
