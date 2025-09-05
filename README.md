@@ -26,7 +26,7 @@
   9. Crie o diretório "/etc/ssl/IFSC/" e copie para ele os certificados emitidos para o campus ou para a wifi (Ex: wifi.ifsc.edu.br.crt  e wifi.ifsc.edu.br.key)
   10. Observe a estrutura da policy criada. Ela sugere um ID diferente para cada situação (ex: ID 120 para os "Domain Admins"), bem como a negação de acesso para um usuário no grupo "WIFI-Deny"
 
-## Implementação
+### Implementação
   1. Edite o arquivo "clients.conf" e personalize ele com os IPs do dispositivos que farão uso do radius (ex: switch, fortigate, etc) e uma senha exclusiva para cada. Ou, siga o exemplo e deixe "*" no "ipv4addr" para usar a mesma senha em vários dispositivos (não recomendado)
    
   2. Edite o arquivo "users" e comente as linhas relacionadas à atribuição de VLANs
