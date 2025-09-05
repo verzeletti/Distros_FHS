@@ -1,0 +1,84 @@
+#
+# File: sites-available/default
+#
+# versao 20240229
+#
+# Glaidson Verzeletti <verzeletti (at) gmail dot com>
+#
+#
+# OBSERVAÇÃO:
+#     Site Radius alinhado com arquivo policy/vlan_ifsc
+#
+#
+# -- Configurações necessárias nos notebooks: GIT do projeto Samba4-AD
+# -- Projeto coordenado pelo Igor Fernandes Kattar <igor.kattar@ifsc.edu.br>
+#      .: https://git.ifsc.edu.br/ctic/cte/samba4/
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-===-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+server inner-tunnel {
+listen {
+       ipaddr = 127.0.0.1
+       port = 18120
+       type = auth
+}
+authorize {
+        filter_username
+        # Obtem username da string DOMINIO\username
+        if ("%{request:User-Name}" =~ /^((.*)\\)+(.*)/) {
+                update request {
+                        Stripped-User-Name := "%{3}"
+                }
+        }
+        # Obtem computername$ da string host/computername.dominio
+        elsif ("%{request:User-Name}" =~ /^(.*\/)+([^.]+)/) {
+                update request {
+                        Stripped-User-Name := "%{2}$"
+                }
+        }
+        else {
+                update request {
+                        Stripped-User-Name := "%{request:User-Name}"
+                }
+        }
+        mschap
+        eap {
+                ok = return
+        }
+        files
+        expiration
+        # Permite aos usuarios do Samba-AD fazem login apenas se utilizado o SSID "IFSC"
+        # Configurações necessárias nos notebooks: GIT do projeto Samba4-AD
+        #if ( &Called-Station-Id && &Called-Station-Id =~ /.*:IFSC$/i) {
+        #       ok = return
+        #}else  {
+        #       reject
+        #}
+}
+authenticate {
+        ntlm_auth
+        Auth-Type MS-CHAP {
+                mschap
+        }
+        mschap
+        eap
+}
+session {
+}
+post-auth {
+        Post-Auth-Type REJECT {
+                attr_filter.access_reject
+                update outer.session-state {
+                        &Module-Failure-Message := &request:Module-Failure-Message
+                }
+        }
+        Post-Auth-Type Challenge {
+        }
+        # Função do "policy/vlan_ifsc": VID automático para usuários e computadores
+        rewrite.vlan_ifsc
+}
+pre-proxy {
+}
+post-proxy {
+ eap
+}
+}
