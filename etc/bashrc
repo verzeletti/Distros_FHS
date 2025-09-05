@@ -51,7 +51,7 @@ esac
 force_color_prompt=yes
 
 # VLAN Segment: DMZ, LAN, ACAD, TEST
-HOST_PROMPT=LAN
+HOST_PROMPT=TEST
 
 # Prompt default: oneline, oneline_nouser, twoline, twoline_nouser
 PROMPT_USER=twoline
