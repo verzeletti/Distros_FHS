@@ -1,0 +1,119 @@
+#
+# File: policy/vlan_ifsc
+#
+# Função para determinar o VLAN Id do usuario ou computador, com base na árvore ldap (samba-ad)
+#
+# versao 20240229
+#
+# Glaidson Verzeletti <verzeletti (at) gmail dot com>
+#
+#
+#
+# EXEMPLOS DE FILTROS POR GRUPO:
+#
+#    if (LDAP-Group == "Domain Admins")
+#
+#    if (LDAP-Group == "LG-TAE" || LDAP-Group == "LG-DOCENTE" || LDAP-Group == "IFSC-ADM" || LDAP-Group == "WIFI-ADM")
+#
+#
+# EXEMPLOS DE FILTROS POR DN:
+#
+#    if ("%{ldap:ldap:///OU=Usuarios,dc=urupema,dc=sc?sAMAccountName?sub?sAMAccountName=%{User-Name}}")
+#
+#    if ("%{ldap:ldap:///OU=Usuarios,dc=urupema,dc=sc?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}")
+#
+#-=-=-=-=-=-=-=-==-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+# (1.) Variaveis ajustadas conforme organização da árvore Samba-AD
+BASE_DN   = "dc=urupema,dc=sc"
+OU_CAMPUS = "OU=Urupema_LAN"
+
+USER_CAMPUS = "OU=Usuarios,${policy.OU_CAMPUS},${policy.BASE_DN}"
+COMP_CAMPUS = "OU=Wifi,OU=Computadores,${policy.OU_CAMPUS},${policy.BASE_DN}"
+
+USUARIOS      = "OU=Usuarios,${policy.BASE_DN}"
+ALUNOS        = "OU=Alunos,${policy.BASE_DN}"
+TERCEIRIZADOS = "OU=Terceirizados,${policy.USER_CAMPUS}"
+VISITANTES    = "OU=Visitantes,${policy.USER_CAMPUS}"
+
+COMP_ADM  = "OU=Administrativos,${policy.COMP_CAMPUS}"
+COMP_LABS = "OU=Laboratorios,${policy.COMP_CAMPUS}"
+COMP_TERC = "OU=Terceirizados,${policy.COMP_CAMPUS}"
+
+
+# (2.) Função utilizada pelos sites
+rewrite.vlan_ifsc {
+
+        # Logins proibidos de usar WIFI
+        if (LDAP-Group == "WIFI-Deny" || LDAP-Group == "wifi-deny") {
+                reject
+        }
+        # Servidores, Tutores, Bolsistas
+        elsif ("%{ldap:ldap:///${policy.USUARIOS}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}") {
+                # Grupo com Permissão Especial
+                if (LDAP-Group == "Domain Admins") {
+                        update reply {
+                                Tunnel-Type := VLAN,
+                                Tunnel-Medium-Type := IEEE-802,
+                                Tunnel-Private-Group-Id += "120"
+                        }
+                        updated
+                }
+                # VLAN Administrativa Default
+                else {
+                        update reply {
+                                Tunnel-Type := VLAN,
+                                Tunnel-Medium-Type := IEEE-802,
+                                Tunnel-Private-Group-Id += "520"
+                        }
+                        updated
+                }
+        }
+        # Alunos
+        elsif ("%{ldap:ldap:///${policy.ALUNOS}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}") {
+                update reply {
+                        Tunnel-Type := VLAN,
+                        Tunnel-Medium-Type := IEEE-802,
+                        Tunnel-Private-Group-Id += "530"
+                }
+                updated
+        }
+        # Terceirizados e Visitantes - mediante cadastro no Samba-AD
+        elsif ("%{ldap:ldap:///${policy.TERCEIRIZADOS}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}" || \
+               "%{ldap:ldap:///${policy.VISITANTES}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}") {
+                update reply {
+                        Tunnel-Type := VLAN,
+                        Tunnel-Medium-Type := IEEE-802,
+                        Tunnel-Private-Group-Id += "540"
+                }
+                updated
+        }
+        # Computadores Administrativos
+        elsif ("%{ldap:ldap:///${policy.COMP_ADM}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}") {
+                update reply {
+                        Tunnel-Type := VLAN,
+                        Tunnel-Medium-Type := IEEE-802,
+                        Tunnel-Private-Group-Id += "200"
+                }
+                updated
+        }
+        # Computadores Laboratórios e Terceirizados - registrados no Samba-AD
+        elsif ("%{ldap:ldap:///${policy.COMP_LABS}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}" || \
+               "%{ldap:ldap:///${policy.COMP_TERC}?sAMAccountName?sub?sAMAccountName=%{Stripped-User-Name}}") {
+                update reply {
+                        Tunnel-Type := VLAN,
+                        Tunnel-Medium-Type := IEEE-802,
+                        Tunnel-Private-Group-Id += "300"
+                }
+                updated
+        }
+        # VLAN Inexistente - para evitar acesso indevido
+        else {
+                update reply {
+                        Tunnel-Type := VLAN,
+                        Tunnel-Medium-Type := IEEE-802,
+                        Tunnel-Private-Group-Id += "999"
+                }
+                updated
+        }
+}
