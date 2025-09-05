@@ -1,0 +1,111 @@
+#
+# File: sites-available/default
+#
+# versao 20240229
+#
+# Glaidson Verzeletti <verzeletti (at) gmail dot com>
+#
+#
+# OBSERVAÇÃO:
+#     Site Radius alinhado com arquivo policy/vlan_ifsc
+#
+#
+# -- Configurações necessárias nos notebooks: GIT do projeto Samba4-AD
+# -- Projeto coordenado pelo Igor Fernandes Kattar <igor.kattar@ifsc.edu.br>
+#      .: https://git.ifsc.edu.br/ctic/cte/samba4/
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-===-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+server default {
+listen {
+        type = auth
+        ipaddr = *
+        port = 0
+        limit {
+              max_connections = 32
+              lifetime = 0
+              idle_timeout = 30
+        }
+}
+listen {
+        ipaddr = *
+        port = 0
+        type = acct
+        limit {
+        }
+}
+authorize {
+        filter_username
+        preprocess
+        # Obtem username da string DOMINIO\username
+        if ("%{request:User-Name}" =~ /^((.*)\\)+(.*)/) {
+                update request {
+                        Stripped-User-Name := "%{3}"
+                }
+        }
+        # Obtem computername$ da string host/computername.dominio
+        elsif ("%{request:User-Name}" =~ /^(.*\/)+([^.]+)/) {
+                update request {
+                        Stripped-User-Name := "%{2}$"
+                }
+        }
+        else {
+                update request {
+                        Stripped-User-Name := "%{request:User-Name}"
+                }
+        }
+        mschap
+        eap {
+                ok = return
+        }
+        files
+        expiration
+        # Permite aos usuarios do Samba-AD fazem login apenas se utilizado o SSID "IFSC"
+        # Se comentado, permite autenticação dos usuários tanto via WIFI quanto via cabeamento
+        #if ( &Called-Station-Id && &Called-Station-Id =~ /.*:IFSC$/i) {
+        #       ok = return
+        #}else  {
+        #       reject
+        #}
+}
+authenticate {
+        Auth-Type MS-CHAP {
+                mschap
+        }
+        mschap
+        eap
+        ntlm_auth
+}
+preacct {
+        preprocess
+        acct_unique
+        suffix
+}
+accounting {
+        detail
+        exec
+        attr_filter.accounting_response
+}
+session {
+}
+post-auth {
+        update {
+                &reply: += &session-state:
+        }
+        exec
+        remove_reply_message_if_eap
+        Post-Auth-Type REJECT {
+                attr_filter.access_reject
+                eap
+                remove_reply_message_if_eap
+        }
+        Post-Auth-Type Challenge {
+        }
+        # Função do "policy/vlan_ifsc": VID automático para usuários e computadores
+        rewrite.vlan_ifsc
+}
+pre-proxy {
+}
+post-proxy {
+        eap
+}
+}
