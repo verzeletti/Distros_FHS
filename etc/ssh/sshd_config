@@ -97,9 +97,9 @@ TCPKeepAlive yes
 #UseLogin no
 #UsePrivilegeSeparation sandbox
 #PermitUserEnvironment no
-#Compression delayed
-#ClientAliveInterval 0
-#ClientAliveCountMax 3
+Compression yes
+ClientAliveInterval 0
+ClientAliveCountMax 3
 UseDNS no
 #PidFile /var/run/sshd.pid
 #MaxStartups 10:30:100
@@ -123,4 +123,4 @@ Subsystem       sftp    /usr/lib/openssh/sftp-server
 #       PermitTTY no
 #       ForceCommand cvs server
 
-AllowUsers admin ctic
+AllowUsers usuario01 usuario02 usuario03
