@@ -1,0 +1,41 @@
+"references: https://vimhelp.org/options.txt.html
+
+let g:skip_defaults_vim = 1     " To prevent defaults.vim from being loaded
+
+
+"set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
+set history=200                 " keep 200 lines of command line history
+set showcmd                     " display incomplete commands
+set wildmenu                    " display completion matches in a status line
+set ttimeout                    " time out for key codes
+set ttimeoutlen=100             " wait up to 100ms after Esc for special key
+set display=truncate            " Show @@@ in the last line if it is truncated.
+set scrolloff=5                 " Show a few lines of context around the cursor.
+
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+" Avoid side effects when it was already reset.
+if &compatible
+  set nocompatible
+endif
+
+" Do incremental searching when it's possible to timeout.
+if has('reltime')
+  set incsearch
+endif
+
+
+" Personal Settings
+set nomodeline                  " Disable modeline, useful when start a YAML file
+set bg=dark                     " Using a dark background
+"set tabstop=2                  " Tabs spaces
+set expandtab                   " Avoid new indent reconstructed in a copy
+set noautoindent                " The same as the after option
+set paste                       " Facility of copy/paste
+set ruler                       " Show the cursor position all the time
+"set nu                         " Set line number
+set mouse=                      " Disable mouse usage
+set ttymouse=                   " Disable mouse usage
+syntax on                       " Syntax highlighting
+colorscheme industry            " Color Scheme
+set clipboard=unnamedplus       " Clipboard integration with X11 (GUI)
