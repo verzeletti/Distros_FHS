@@ -1,7 +1,10 @@
 "references: https://vimhelp.org/options.txt.html
-
 let g:skip_defaults_vim = 1     " To prevent defaults.vim from being loaded
 
+" Desativar autocomando específico para arquivos .br
+autocmd! * *.br
+let g:loaded_gzip = 1
+let g:zipPlugin_ext = '*.zip,*.gz,*.bz2,*.Z,*.lzma,*.xz,*.lz,*.tgz,*.tbz,*.tbz2,*.tz2,*.tlz,*.txz,*.jar,*.war,*.ear,*.odt,*.ods,*.odp'
 
 "set backspace=indent,eol,start  " Allow backspacing over everything in insert mode.
 set history=200                 " keep 200 lines of command line history
