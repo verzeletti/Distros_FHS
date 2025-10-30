@@ -8,18 +8,18 @@ runtime! debian.vim
 
 " Vim5 and later versions support syntax highlighting. Uncommenting the next
 " line enables syntax highlighting by default.
-syntax on
+"syntax on
 
 " If using a dark background within the editing area and syntax highlighting
 " turn on this option as well
-set background=dark
+"set background=dark
 
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
-set noautoindent        " Copy and Past Facility
-set paste               " Copy and Past Facility
-set mouse=nicr          " Disable mouse usage (You can use -C flag, ex: vim -C somefile)
-set ttymouse=           " Disable mouse usage in terminal
+"set noautoindent        " Copy and Past Facility
+"set paste               " Copy and Past Facility
+"set mouse=nicr          " Disable mouse usage (You can use -C flag, ex: vim -C somefile)
+"set ttymouse=           " Disable mouse usage in terminal
 
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
