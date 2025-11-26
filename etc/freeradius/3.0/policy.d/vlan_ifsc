@@ -3,7 +3,7 @@
 #
 # Função para determinar o VLAN Id do usuario ou computador, com base na árvore ldap (samba-ad)
 #
-# versao 20240229
+# versao 20251126
 #
 # Glaidson Verzeletti <verzeletti (at) gmail dot com>
 #
@@ -45,7 +45,7 @@ COMP_TERC = "OU=Terceirizados,${policy.COMP_CAMPUS}"
 rewrite.vlan_ifsc {
 
         # Logins proibidos de usar WIFI
-        if (LDAP-Group == "WIFI-Deny" || LDAP-Group == "wifi-deny") {
+        if (LDAP-Group == "WIFI-Deny" || LDAP-Group == "wifi-deny" || LDAP-Group == "WIFI-Comp-Deny") {
                 reject
         }
         # Servidores, Tutores, Bolsistas
