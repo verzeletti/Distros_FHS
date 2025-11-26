@@ -1,7 +1,7 @@
 #
 # File: sites-available/default
 #
-# versao 20240229
+# versao 20250505
 #
 # Glaidson Verzeletti <verzeletti (at) gmail dot com>
 #
@@ -23,6 +23,12 @@ listen {
 }
 authorize {
         filter_username
+        # 2024.07.09BlastRADIUS Vulnerability
+        if (!EAP-Message) {
+                update reply {
+                        Message-Authenticator := 0x00
+                }
+        }
         # Obtem username da string DOMINIO\username
         if ("%{request:User-Name}" =~ /^((.*)\\)+(.*)/) {
                 update request {
