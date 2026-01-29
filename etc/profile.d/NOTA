@@ -1,0 +1,8 @@
+Paras as versões do ArchLinux:
+
+1. Criar diretório "/etc/login-script"
+
+2. Em "/etc/pam.d/system-login", adicionar a linha:
+   session    optional   pam_exec.so          stdout /etc/login-script/10-uname
+
+3. Criar arquivo "/etc/login-script/10-uname" com o conteúdo disponível neste GIT
