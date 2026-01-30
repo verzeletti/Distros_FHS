@@ -38,9 +38,10 @@ hostnamectl set-hostname $1
 
 # re-gerar chaves SSH
 rm -f /etc/ssh/ssh_host_* 2> /dev/null
-dpkg-reconfigure openssh-server --force &> /dev/null
+# dpkg-reconfigure openssh-server --force &> /dev/null
+ssh-keygen -A -q &>/dev/null
+systemctl restart sshd
 
 
 # mensagem final
 echo -n "Apenas realize um novo login, para corrigir o hostname do prompt!"
-
