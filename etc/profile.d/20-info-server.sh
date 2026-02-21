@@ -5,6 +5,8 @@
 # 3- PrintLastLog yes (option in /etc/ssh/sshd_config)
 # 4- /etc/profile.d/20-info_servidor.sh
 
+#[ "$EUID" -eq 0 ] && { echo "Não execute como root"; exit 1; }
+[ "$EUID" -ne 0 ] && {
 echo -e ""
 #echo -e "\033[01;37m              ______________________________________\033[00;37m"
 #echo -e "               \e[01;37m$(date +"%A, %e %B %Y, %r")
@@ -31,3 +33,4 @@ echo -e "\e[01;37m               >>>  $(date +"%A, %e %B %Y")  <<<
  \e[31m         * * * Based on Arch Hardening Template * * * \e[0m
 
 "
+}
