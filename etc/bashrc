@@ -86,6 +86,7 @@ if [ "$color_prompt" = yes ]; then
     user_color='\[\033[;97m\]'		# branco
     info_color='\[\033[00;90m\]'	# cinza
     #prompt_symbol=' ㉿'
+    #prompt_symbol=' ⎈'
     prompt_symbol='@'
     PROMPT_ALTERNATIVE=$PROMPT_USER
 
