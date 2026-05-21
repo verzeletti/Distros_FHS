@@ -13,6 +13,7 @@ SOURCE_DIR="/backup"
 
 # Destino remoto
 #REMOTE="DiscoVirtual:/LGS/backups"
+# Chunk - Aponta para o DiscoVirtual, Hash MD5 e quebra de 3G
 REMOTE="DiscoVirtual-Chunk:/LGS/backups"
 
 # Controle de concorrência
